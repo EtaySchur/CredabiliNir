@@ -98,6 +98,24 @@ class DbManager {
 
     }
 
+    public static function updateNirCredit($credit){
+        if($credit > 100){
+            $credit = 100;
+        }
+
+        if($credit < 0){
+            $credit = 0;
+        }
+
+        $conn = self::connectToDb();
+        $sql = "UPDATE `nir` SET `grade` = $credit";
+        $stmt = $conn->query($sql);
+        $stmt->execute();
+        $result = $stmt->fetchAll();
+        return $result;
+
+    }
+
 
 
     public static function saveComments($comments , $formId){
