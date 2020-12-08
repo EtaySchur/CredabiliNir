@@ -2,8 +2,8 @@ provider "kubernetes" {}
 
 resource "kubernetes_deployment" "risky" {
   metadata {
-    name = "risky-ngnix-deployment-hc"
-		namespace = "default"
+    name      = "risky-ngnix-deployment-hc"
+    namespace = "default"
     labels = {
       app = "risky"
     }
@@ -26,14 +26,14 @@ resource "kubernetes_deployment" "risky" {
       }
 
       spec {
-				automount_service_account_token = true
-				host_ipc = true
-				host_pid = true
-				host_network = true
+        automount_service_account_token = true
+        host_ipc                        = true
+        host_pid                        = true
+        host_network                    = true
         container {
-          image = "nginx"
-          name  = "risky-ngnix-container"
-					image_pull_policy = "Never"
+          image             = "nginx"
+          name              = "risky-ngnix-container"
+          image_pull_policy = "Always"
         }
       }
     }
