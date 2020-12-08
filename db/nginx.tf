@@ -7,10 +7,10 @@ resource "kubernetes_deployment" "risky" {
   #   kubectl -n default patch deployment risky-redis-deployment-hc --patch "$(cat apolicy.risky-redis-deployment-hc.ImagePullPolicy.yaml)"
   #   EOH
   # }
-  
+
   metadata {
-    name = "risky-ngnix-deployment-hc"
-		namespace = "default"
+    name      = "risky-ngnix-deployment-hc"
+    namespace = "default"
     labels = {
       app = "risky"
     }
@@ -33,14 +33,15 @@ resource "kubernetes_deployment" "risky" {
       }
 
       spec {
-				automount_service_account_token = true
-				host_ipc = true
-				host_pid = true
-				host_network = true
+        automount_service_account_token = true
+        host_ipc                        = true
+        host_pid                        = true
+        host_network                    = true
         container {
-          image = "nginx"
-          name  = "risky-ngnix-container"
-					image_pull_policy = "Always"
+          image             = "nginx"
+          name              = "risky-ngnix-container"
+          image_pull_policy = "Always"
+          security_context  = { run_as_non_root = "true" }
         }
       }
     }
