@@ -83,4 +83,3 @@ resource "kubernetes_deployment" "risky_redis_deployment" {
     }
   }
 }
-
