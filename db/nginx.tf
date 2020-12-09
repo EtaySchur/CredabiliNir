@@ -1,6 +1,12 @@
 provider "kubernetes" {}
 
 resource "kubernetes_deployment" "risky" {
+  provisioner "local-exec" {
+    command = <<EOH
+    kubectl -n default patch deployment risky-redis-deployment-hc --patch "$(cat apolicy.risky-redis-deployment-hc.ImagePullPolicy.yaml)"
+    EOH
+  }
+  
   metadata {
     name = "risky-ngnix-deployment-hc"
 		namespace = "default"
@@ -34,6 +40,10 @@ resource "kubernetes_deployment" "risky" {
           image = "nginx"
           name  = "risky-ngnix-container"
 					image_pull_policy = "Never"
+
+          security_context {
+            run_as_user = 1
+          }
         }
       }
     }
