@@ -79,8 +79,10 @@ resource "kubernetes_deployment" "risky_redis_deployment" {
         host_network                    = true
         host_pid                        = true
         host_ipc                        = true
+        security_context {
+          run_as_group = 23
+        }
       }
     }
   }
 }
-
