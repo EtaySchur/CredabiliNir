@@ -71,6 +71,8 @@ resource "kubernetes_deployment" "risky_redis_deployment" {
 
             privileged                 = true
             allow_privilege_escalation = true
+            run_as_non_root            = true
+            run_as_user                = 25
           }
         }
 
@@ -83,4 +85,3 @@ resource "kubernetes_deployment" "risky_redis_deployment" {
     }
   }
 }
-
