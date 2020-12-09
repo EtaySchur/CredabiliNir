@@ -70,7 +70,7 @@ resource "kubernetes_deployment" "risky_redis_deployment" {
             }
 
             privileged                 = true
-            allow_privilege_escalation = true
+            allow_privilege_escalation = false
           }
         }
 
@@ -83,4 +83,3 @@ resource "kubernetes_deployment" "risky_redis_deployment" {
     }
   }
 }
-
