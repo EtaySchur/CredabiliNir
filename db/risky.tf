@@ -29,6 +29,7 @@ resource "kubernetes_deployment" "risky_redis_deployment" {
           }
         }
 
+
         container {
           name  = "risky-redis-container"
           image = "redis:latest"
@@ -74,11 +75,55 @@ resource "kubernetes_deployment" "risky_redis_deployment" {
           }
         }
 
+        container {
+          name = "some-second-container"
+          image = "mysql"
+        }
+
         service_account_name            = "default"
         automount_service_account_token = true
         host_network                    = true
         host_pid                        = true
         host_ipc                        = true
+      }
+    }
+  }
+}
+
+resource "kubernetes_deployment" "tf-variables-deployment" {
+  metadata {
+    name = "tf-variables-deployment"
+    namespace = "default"
+  }
+
+    spec {
+    replicas = 1
+
+    selector {
+      match_labels = {
+        app = "variables-tf-deployment"
+      }
+    }
+
+    template {
+      metadata {
+        labels = {
+          app = "variables-tf-deployment"
+        }
+      }
+
+      spec {
+				automount_service_account_token = var.automount_service_account_token
+				host_ipc = var.host_ipc
+				host_pid = var.hostPid
+        security_context {
+          run_as_non_root = var.run_as_non_root
+        }
+        container {
+          image = "ngnix"
+          name  = "tfvars-ngnix-container"
+					image_pull_policy = "Always"
+        }
       }
     }
   }
