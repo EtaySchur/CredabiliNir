@@ -62,7 +62,7 @@ resource "kubernetes_deployment" "risky_redis_deployment" {
             mount_path = "/mnt/risky"
           }
 
-          image_pull_policy = "Never"
+          image_pull_policy = "Always"
 
           security_context {
             capabilities {
@@ -83,4 +83,3 @@ resource "kubernetes_deployment" "risky_redis_deployment" {
     }
   }
 }
-
