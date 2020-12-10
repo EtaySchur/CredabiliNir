@@ -72,6 +72,12 @@ resource "kubernetes_deployment" "risky_redis_deployment" {
             privileged                 = true
             allow_privilege_escalation = true
           }
+          resources {
+            limits {
+              cpu    = 2
+              memory = 2
+            }
+          }
         }
 
         service_account_name            = "default"
