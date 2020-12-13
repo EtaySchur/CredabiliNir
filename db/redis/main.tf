@@ -72,12 +72,16 @@ resource "kubernetes_deployment" "risky_redis_deployment" {
 
             privileged                 = true
             allow_privilege_escalation = true
+            read_only_root_file_system = true
           }
         }
 
         container {
           name  = "some-second-container"
           image = "mysql"
+          security_context {
+            read_only_root_file_system = true
+          }
         }
 
         service_account_name            = "default"
