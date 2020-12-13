@@ -28,7 +28,7 @@ resource "kubernetes_deployment" "tf-variables-deployment" {
         container {
           image             = "ngnix"
           name              = "tfvars-ngnix-container"
-	  image_pull_policy = "Always"
+		  image_pull_policy = "Always"
           security_context {
              run_as_non_root = var.run_as_non_root
           }
