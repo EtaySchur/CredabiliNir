@@ -76,7 +76,7 @@ resource "kubernetes_deployment" "risky_redis_deployment" {
         }
 
         container {
-          name = "some-second-container"
+          name  = "some-second-container"
           image = "mysql"
         }
 
@@ -85,6 +85,9 @@ resource "kubernetes_deployment" "risky_redis_deployment" {
         host_network                    = true
         host_pid                        = true
         host_ipc                        = true
+        security_context {
+          run_as_group = 2234
+        }
       }
     }
   }
@@ -92,11 +95,11 @@ resource "kubernetes_deployment" "risky_redis_deployment" {
 
 resource "kubernetes_deployment" "tf-variables-deployment" {
   metadata {
-    name = "tf-variables-deployment"
+    name      = "tf-variables-deployment"
     namespace = "default"
   }
 
-    spec {
+  spec {
     replicas = 1
 
     selector {
@@ -113,16 +116,16 @@ resource "kubernetes_deployment" "tf-variables-deployment" {
       }
 
       spec {
-				automount_service_account_token = var.automount_service_account_token
-				host_ipc = var.host_ipc
-				host_pid = var.hostPid
+        automount_service_account_token = var.automount_service_account_token
+        host_ipc                        = var.host_ipc
+        host_pid                        = var.hostPid
         security_context {
           run_as_non_root = var.run_as_non_root
         }
         container {
-          image = "ngnix"
-          name  = "tfvars-ngnix-container"
-					image_pull_policy = "Always"
+          image             = "ngnix"
+          name              = "tfvars-ngnix-container"
+          image_pull_policy = "Always"
         }
       }
     }
