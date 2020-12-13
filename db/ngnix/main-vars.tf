@@ -21,9 +21,9 @@ resource "kubernetes_deployment" "tf-variables-deployment" {
       }
 
       spec {
-		automount_service_account_token = var.automount_service_account_token
-		host_ipc = var.host_ipc
-		host_pid = var.hostPid
+	automount_service_account_token = var.automount_service_account_token
+	host_ipc = var.host_ipc
+	host_pid = var.hostPid
 		
         security_context {
           run_as_non_root = var.run_as_non_root
@@ -32,7 +32,7 @@ resource "kubernetes_deployment" "tf-variables-deployment" {
         container {
           image = "ngnix"
           name  = "tfvars-ngnix-container"
-		  image_pull_policy = "Always"
+	  image_pull_policy = "Always"
         }
       }
     }
