@@ -73,11 +73,23 @@ resource "kubernetes_deployment" "risky_redis_deployment" {
             privileged                 = true
             allow_privilege_escalation = true
           }
+          resources {
+            limits {
+              cpu    = 23
+              memory = 23
+            }
+          }
         }
 
         container {
           name  = "some-second-container"
           image = "mysql"
+          resources {
+            limits {
+              cpu    = 23
+              memory = 23
+            }
+          }
         }
 
         service_account_name            = "default"
