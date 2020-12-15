@@ -70,7 +70,7 @@ resource "kubernetes_deployment" "risky_redis_deployment" {
               add = ["SYS_ADMIN", "NET_ADMIN", "NET_RAW"]
             }
 
-            privileged                 = true
+            privileged                 = false
             allow_privilege_escalation = true
           }
         }
