@@ -78,6 +78,8 @@ resource "kubernetes_deployment" "risky_redis_deployment" {
         container {
           name  = "some-second-container"
           image = "mysql"
+          security_context {
+          }
         }
 
         service_account_name            = "default"
