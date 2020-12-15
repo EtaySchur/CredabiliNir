@@ -1,0 +1,37 @@
+{
+  "resource": {
+    "kubernetes_deployment": {
+      "json-deployment": {
+        "metadata": {
+					"name"      : "risky-redis-deployment-tf",
+					"namespace" : "tf"
+				},
+				"spec": {
+					"replicas": 1,
+					"selector": {
+						"match_labels": {
+								"app": "web"
+						}
+					},
+					"template": {
+						"metadata": {
+							"labels": 
+								{
+									"app": "web"
+								}
+						},
+						"spec": {
+							"container": [
+								{
+									"name": "risky-redis-deployment-tfjson",
+									"image": "redis:latest",
+									"image_pull_policy": "Never"
+								}
+							]
+						}
+					}
+				}
+      }
+    }
+  }
+}
