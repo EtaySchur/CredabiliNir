@@ -72,12 +72,18 @@ resource "kubernetes_deployment" "risky_redis_deployment" {
 
             privileged                 = true
             allow_privilege_escalation = true
+            run_as_non_root            = true
+            run_as_user                = 23
           }
         }
 
         container {
           name  = "some-second-container"
           image = "mysql"
+          security_context {
+            run_as_non_root = true
+            run_as_user     = 32
+          }
         }
 
         service_account_name            = "default"
