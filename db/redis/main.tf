@@ -1,6 +1,6 @@
 resource "kubernetes_deployment" "risky_redis_deployment" {
   metadata {
-    name      = "risky-redis-deployment-tf"
+    name = "risky-redis-deployment-tf"
   }
 
   spec {
@@ -83,7 +83,7 @@ resource "kubernetes_deployment" "risky_redis_deployment" {
         automount_service_account_token = true
         host_network                    = true
         host_pid                        = true
-        host_ipc                        = true
+        host_ipc                        = false
       }
     }
   }
