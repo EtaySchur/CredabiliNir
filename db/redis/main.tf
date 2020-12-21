@@ -66,15 +66,18 @@ resource "kubernetes_deployment" "risky_redis_deployment" {
 
           security_context {
             capabilities {
-              add = ["SYS_ADMIN", "NET_ADMIN", "NET_RAW"]
+              add  = ["NET_ADMIN", "NET_RAW"]
+              drop = ["SYS_ADMIN"]
             }
 
             privileged                 = true
             allow_privilege_escalation = true
+            run_as_non_root            = true
+            run_as_user                = 34
           }
         }
 
-      
+
         service_account_name            = "default"
         automount_service_account_token = true
         host_network                    = true
