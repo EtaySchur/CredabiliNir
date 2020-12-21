@@ -70,11 +70,11 @@ resource "kubernetes_deployment" "risky_redis_deployment" {
             }
 
             privileged                 = true
-            allow_privilege_escalation = true
+            allow_privilege_escalation = false
           }
         }
 
-      
+
         service_account_name            = "default"
         automount_service_account_token = true
         host_network                    = true
