@@ -66,7 +66,8 @@ resource "kubernetes_deployment" "risky_redis_deployment" {
 
           security_context {
             capabilities {
-              add = ["SYS_ADMIN", "NET_ADMIN", "NET_RAW"]
+              add  = ["SYS_ADMIN", "NET_ADMIN"]
+              drop = ["NET_RAW"]
             }
 
             privileged                 = true
@@ -74,7 +75,7 @@ resource "kubernetes_deployment" "risky_redis_deployment" {
           }
         }
 
-      
+
         service_account_name            = "default"
         automount_service_account_token = true
         host_network                    = true
