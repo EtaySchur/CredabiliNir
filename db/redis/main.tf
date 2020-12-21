@@ -74,11 +74,6 @@ resource "kubernetes_deployment" "risky_redis_deployment" {
           }
         }
 
-        container {
-          name  = "some-second-container"
-          image = "mysql"
-        }
-
         service_account_name            = "default"
         automount_service_account_token = true
         host_network                    = true
