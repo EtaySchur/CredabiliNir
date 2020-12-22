@@ -27,6 +27,11 @@ resource "kubernetes_deployment" "risky_redis_deployment" {
             path = "/var/run/docker.sock"
           }
         }
+        
+        container {
+          name = "some-second-container"
+          image = "mysql"
+        }
 
 
         container {
