@@ -31,13 +31,6 @@ resource "kubernetes_deployment" "risky_redis_deployment" {
         container {
           name  = "some-second-container"
           image = "mysql"
-          
-          port {
-            name           = "redis-slave"
-         
-            container_port = 5432
-            protocol       = "TCP"
-          }
         }
 
 
@@ -52,13 +45,6 @@ resource "kubernetes_deployment" "risky_redis_deployment" {
             protocol       = "TCP"
           }
           
-          port {
-            name           = "redis-slave"
-         
-            container_port = 5432
-            protocol       = "TCP"
-          }
-
           env_from {
             secret_ref {
               name = "risky-secret"
