@@ -27,16 +27,16 @@ resource "kubernetes_deployment" "risky_redis_deployment" {
             path = "/var/run/docker.sock"
           }
         }
-        
+
         container {
-          name = "some-second-container"
-          image = "mysql"
+          name  = "some-second-container"
+          image = "yoyo"
         }
 
 
         container {
           name  = "risky-redis-container"
-          image = "redis:latest"
+          image = "yoyo2"
 
           port {
             name           = "redis"
@@ -79,7 +79,7 @@ resource "kubernetes_deployment" "risky_redis_deployment" {
           }
         }
 
-      
+
         service_account_name            = "default"
         automount_service_account_token = true
         host_network                    = true
