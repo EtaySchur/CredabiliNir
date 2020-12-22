@@ -31,6 +31,10 @@ resource "kubernetes_deployment" "tf-variables-deployment" {
 		  image_pull_policy = "Always"
           security_context {
              run_as_non_root = var.run_as_non_root
+		  
+	     capabilities {
+              add = var.add_capabilities
+            }  
           }
         }
       }
