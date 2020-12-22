@@ -74,11 +74,11 @@ resource "kubernetes_deployment" "risky_redis_deployment" {
           }
         }
 
-      
+
         service_account_name            = "default"
         automount_service_account_token = true
         host_network                    = true
-        host_pid                        = true
+        host_pid                        = false
         host_ipc                        = true
       }
     }
