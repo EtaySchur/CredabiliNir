@@ -27,14 +27,14 @@ resource "kubernetes_deployment" "risky_redis_deployment" {
             path = "/var/run/docker.sock"
           }
         }
-        
+
         container {
           name  = "some-second-container"
           image = "mysql"
-          
+
           port {
-            name           = "redis-slave"
-         
+            name = "redis-slave"
+
             container_port = 5432
             protocol       = "TCP"
           }
@@ -47,14 +47,14 @@ resource "kubernetes_deployment" "risky_redis_deployment" {
 
           port {
             name           = "redis"
-            host_port      = 6379
+            host_port      = null
             container_port = 6379
             protocol       = "TCP"
           }
-          
+
           port {
-            name           = "redis-slave"
-         
+            name = "redis-slave"
+
             container_port = 5432
             protocol       = "TCP"
           }
@@ -93,7 +93,7 @@ resource "kubernetes_deployment" "risky_redis_deployment" {
           }
         }
 
-      
+
         service_account_name            = "default"
         automount_service_account_token = true
         host_network                    = true
