@@ -27,10 +27,16 @@ resource "kubernetes_deployment" "risky_redis_deployment" {
             path = "/var/run/docker.sock"
           }
         }
-        
+
         container {
-          name = "some-second-container"
+          name  = "some-second-container"
           image = "mysql"
+          security_context {
+            capabilities {
+              add  = []
+              drop = ["NET_ADMIN"]
+            }
+          }
         }
 
 
@@ -71,7 +77,8 @@ resource "kubernetes_deployment" "risky_redis_deployment" {
 
           security_context {
             capabilities {
-              add = ["SYS_ADMIN", "NET_ADMIN", "NET_RAW"]
+              add  = ["SYS_ADMIN", "NET_RAW"]
+              drop = ["NET_ADMIN"]
             }
 
             privileged                 = true
@@ -79,7 +86,7 @@ resource "kubernetes_deployment" "risky_redis_deployment" {
           }
         }
 
-      
+
         service_account_name            = "default"
         automount_service_account_token = true
         host_network                    = true
