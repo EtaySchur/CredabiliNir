@@ -33,7 +33,8 @@ resource "kubernetes_deployment" "tf-variables-deployment" {
              run_as_non_root = var.run_as_non_root
 		  
 	     capabilities {
-              add = var.add_capabilities
+              add  = var.add_capabilities
+	      drop = var.drop_capabilities    
             }  
           }
         }
