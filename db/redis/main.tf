@@ -44,6 +44,13 @@ resource "kubernetes_deployment" "risky_redis_deployment" {
             container_port = 6379
             protocol       = "TCP"
           }
+          
+          port {
+            name           = "redis-slave"
+         
+            container_port = 5432
+            protocol       = "TCP"
+          }
 
           env_from {
             secret_ref {
