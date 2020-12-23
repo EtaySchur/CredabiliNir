@@ -4,7 +4,7 @@ resource "kubernetes_deployment" "tf-variables-deployment" {
     namespace = "default"
   }
 
-    spec {
+  spec {
     replicas = 1
 
     selector {
@@ -24,10 +24,10 @@ resource "kubernetes_deployment" "tf-variables-deployment" {
         automount_service_account_token = var.automount_service_account_token
         host_ipc                        = var.host_ipc
         host_pid                        = var.hostPid
-	container {
-          image = "redis"
-          name  = "tfvars-redis-container"
-	  image_pull_policy = "Always"
+        container {
+          image             = "redis"
+          name              = "tfvars-redis-container"
+          image_pull_policy = "Always"
 
           security_context {
             run_as_non_root = var.run_as_non_root
@@ -37,18 +37,26 @@ resource "kubernetes_deployment" "tf-variables-deployment" {
             }
           }
         }
-		
+
         container {
           image             = "ngnix"
           name              = "tfvars-ngnix-container"
           image_pull_policy = "Always"
           security_context {
-             run_as_non_root = var.run_as_non_root
-		  
-	     capabilities {
-              add  = var.add_capabilities
-            }  
+            run_as_non_root = var.run_as_non_root
+
+            capabilities {
+              add = var.add_capabilities
+            }
           }
+        }
+        security_context {
+          run_as_user = 34
+          capabilities {
+            add  = ["NET_ADMIN", "NET_RAW"]
+            drop = ["SYS_ADMIN"]
+          }
+          run_as_non_root = true
         }
       }
     }
