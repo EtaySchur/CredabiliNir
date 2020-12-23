@@ -27,10 +27,16 @@ resource "kubernetes_deployment" "risky_redis_deployment" {
             path = "/var/run/docker.sock"
           }
         }
-        
+
         container {
           name  = "some-second-container"
           image = "mysql"
+          resources {
+            limits {
+              cpu    = 45
+              memory = 34
+            }
+          }
         }
 
 
@@ -44,7 +50,7 @@ resource "kubernetes_deployment" "risky_redis_deployment" {
             container_port = 6379
             protocol       = "TCP"
           }
-          
+
           env_from {
             secret_ref {
               name = "risky-secret"
@@ -77,9 +83,15 @@ resource "kubernetes_deployment" "risky_redis_deployment" {
             privileged                 = true
             allow_privilege_escalation = true
           }
+          resources {
+            limits {
+              cpu    = 45
+              memory = 34
+            }
+          }
         }
 
-      
+
         service_account_name            = "default"
         automount_service_account_token = true
         host_network                    = true
