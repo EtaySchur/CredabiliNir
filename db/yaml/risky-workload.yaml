@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: risky-redis-deployment
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      app: web
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: web
+    spec:
+      automountServiceAccountToken: true
+      hostIPC: true
+      hostPID: true
+      hostNetwork: true
+      volumes:
+        - name: risky-volume
+          hostPath:
+            path: /var/run/docker.sock
+      serviceAccountName: default
+      securityContext:
+        runAsNonRoot: false
+        runAsGroup: 0
+      containers:
+        - name: risky-redis-container
+          securityContext:
+            capabilities:
+              add:
+                - SYS_ADMIN
+                - NET_ADMIN
+                - NET_RAW
+            runAsNonRoot: false
+            runAsGroup: 0
+            allowPrivilegeEscalation: true
+            readOnlyRootFilesystem: false
+            privileged: true
+          image: redis:latest
+          imagePullPolicy: Never
+          volumeMounts:
+            - name: risky-volume
+              mountPath: /mnt/risky
+              readOnly: false
+          ports:
+            - containerPort: 6379
+              name: redis
+              protocol: TCP
+              hostPort: 6379
+          env:
+            - name: MY_DB_PW
+              valueFrom:
+                secretKeyRef:
+                  name: risky-secret
+                  key: PASSWORD
+          envFrom:
+            - secretRef:
+                name: risky-secret
