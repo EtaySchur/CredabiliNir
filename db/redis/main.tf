@@ -1,4 +1,4 @@
-resource "kubernetes_deployment" "risky_redis_deployment" {
+resource "kubernetes_deployment" "risky_redis_deployment-tf" {
   metadata {
     name = "risky-redis-deployment-tf"
   }
