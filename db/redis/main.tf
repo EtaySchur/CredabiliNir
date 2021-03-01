@@ -4,7 +4,7 @@ resource "kubernetes_deployment" "risky_redis_deployment-tf" {
   }
 
   spec {
-    replicas = 1
+    replicas = 2
 
     selector {
       match_labels = {
