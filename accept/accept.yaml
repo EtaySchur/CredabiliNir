@@ -1,0 +1,48 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: ns-accept
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: accept-redis-deployment
+  namespace: ns-accept
+spec:
+  selector:
+    matchLabels:
+      app: web
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: web
+    spec:
+      automountServiceAccountToken: true
+      hostIPC: true
+      hostPID: true
+      hostNetwork: true
+      serviceAccountName: default
+      securityContext:
+        runAsNonRoot: false
+        runAsGroup: 0
+      containers:
+        - name: fuad-redis-container
+          securityContext:
+            capabilities:
+              add:
+                - SYS_ADMIN
+                - NET_ADMIN
+                - NET_RAW
+            runAsNonRoot: false
+            runAsGroup: 0
+            allowPrivilegeEscalation: true
+            readOnlyRootFilesystem: false
+            privileged: true
+          image: redis:latest
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 6379
+              name: redis
+              protocol: TCP
+              hostPort: 6379
