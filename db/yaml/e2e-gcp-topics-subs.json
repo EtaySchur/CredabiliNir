@@ -1,0 +1,22 @@
+[
+  {
+    "topic" : "tenant-1",
+	"subs" : [ "tenant-00000000-0000-0000-0000-000000000000", "tenant-00000000-0000-0000-0000-000000000001" ]
+  },
+  {
+    "topic" : "cluster-analysis-1",
+	"subs" : [ "cluster-analysis-00000000-0000-0000-0000-000000000000","cluster-analysis-00000000-0000-0000-0000-000000000001" ]
+  },
+  {
+    "topic" : "tenant-2",
+	"subs" : [ "tenant-00000000-0000-0000-0000-000000000002" ]
+  },
+  {
+    "topic" : "cluster-analysis-2",
+	"subs" : [ "cluster-analysis-00000000-0000-0000-0000-000000000002" ]
+  },
+  {
+    "topic" : "manager-config-1",
+	"subs" : [ "manager-config-00000000-0000-0000-0000-000000000000" ]
+  }  
+]
